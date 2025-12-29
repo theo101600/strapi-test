@@ -1,7 +1,6 @@
 .content-items {
   margin-bottom: 12rem;
 
-
   &__container {
     display: grid;
 
@@ -10,12 +9,13 @@
       grid-template-columns: repeat(9, 1fr);
       gap: 2rem;
 
+      color: black;
+
       & .content-items__card {
         grid-column: span 3;
       }
     }
   }
-
 
   &__headline {
     margin-bottom: 6rem;
