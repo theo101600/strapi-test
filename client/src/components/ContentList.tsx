@@ -19,7 +19,7 @@ async function loader(
   path: string,
   featured?: boolean,
   query?: string,
-  page: string
+  page?: string
 ) {
   const { data, meta } = await getContent(path, featured, query, page);
   return {
