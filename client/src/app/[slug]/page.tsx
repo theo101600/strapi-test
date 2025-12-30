@@ -4,8 +4,9 @@ import { BlockRenderer } from "@/components/blocks/BlockRenderer";
 
 async function loader(slug: string) {
   const { data } = await getPageBySlug(slug);
+  console.log(data[0].attributes);
   if (data.length === 0) notFound();
-  return { blocks: data[0]?.blocks };
+  return { blocks: data[0]?.attributes?.blocks };
 }
 
 interface PageProps {

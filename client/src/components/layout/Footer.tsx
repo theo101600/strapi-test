@@ -20,8 +20,10 @@ export function Footer({ data }: FooterProps) {
     <footer className="footer">
       <nav className="footer__nav">
         <StrapiImage
-          src={logo.image.url}
-          alt={logo.image.alternativeText || "No alternative text"}
+          src={logo.image.data.attributes.url}
+          alt={
+            logo.image.data.attributes.alternativeText || "No alternative text"
+          }
           width={100}
           height={100}
           className="footer__logo--white"

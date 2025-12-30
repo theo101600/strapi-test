@@ -6,7 +6,7 @@ async function loader() {
   const data = await getHomePage();
   if (!data) notFound();
   console.log(data);
-  return { ...data.data };
+  return data.data.attributes;
 }
 
 export default async function Home() {

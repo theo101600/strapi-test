@@ -21,8 +21,11 @@ export function FeaturedArticle({
         </Link>
       </div>
       <StrapiImage
-        src={image.url}
-        alt={image.alternativeText || "No alternative text provided"}
+        src={image.data.attributes.url}
+        alt={
+          image.data.attributes.alternativeText ||
+          "No alternative text provided"
+        }
         height={200}
         width={300}
       />

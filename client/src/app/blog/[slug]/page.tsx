@@ -15,6 +15,7 @@ interface PageProps {
 
 async function loader(slug: string) {
   const { data } = await getContentBySlug(slug, "/api/articles");
+  console.log(data);
   const article = data[0];
   if (!article) throw notFound();
   return { article: article as ArticleProps, blocks: article?.blocks };

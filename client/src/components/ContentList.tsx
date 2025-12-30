@@ -49,7 +49,7 @@ export async function ContentList({
       {showSearch && <Search />}
       <div className="content-items__container--card">
         {articles.map((article) => (
-          <Component key={article.documentId} {...article} basePath={path} />
+          <Component key={article.id} {...article.attributes} basePath={path} />
         ))}
       </div>
       {showPagination && <PaginationComponent pageCount={pageCount} />}

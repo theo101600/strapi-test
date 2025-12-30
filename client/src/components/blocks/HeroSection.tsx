@@ -16,8 +16,11 @@ export function HeroSection({
     <section className="hero">
       <div className="hero__background">
         <StrapiImage
-          src={image.url}
-          alt={image.alternativeText || "No alternative text provided"}
+          src={image.data.attributes.url}
+          alt={
+            image.data.attributes.alternativeText ||
+            "No alternative text provided"
+          }
           className="hero__background-image"
           width={1920}
           height={1080}

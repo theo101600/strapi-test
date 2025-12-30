@@ -112,8 +112,12 @@ const globalSettingQuery = qs.stringify({
             },
           },
         },
-        navigation: true,
-        cta: true,
+        navigation: {
+          populate: "*",
+        },
+        cta: {
+          populate: "*",
+        },
       },
     },
     footer: {
@@ -125,8 +129,12 @@ const globalSettingQuery = qs.stringify({
             },
           },
         },
-        navigation: true,
-        policies: true,
+        navigation: {
+          populate: "*",
+        },
+        policies: {
+          populate: "*",
+        },
       },
     },
   },
@@ -137,7 +145,7 @@ export async function getGlobalSettings() {
 
   const url = new URL(path, BASE_URL);
   url.search = globalSettingQuery;
-  return fetchAPI(url.href, { method: "GET" });
+  return await fetchAPI(url.href, { method: "GET" });
 }
 
 export async function getContent(

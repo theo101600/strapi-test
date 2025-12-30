@@ -30,8 +30,11 @@ export function Card({
     <Link href={`/${basePath}/${slug}`} className="content-items__card">
       <div className="content-items__card-img">
         <StrapiImage
-          src={image.url}
-          alt={image.alternativeText || "No alternative text provided"}
+          src={image.data.attributes.url}
+          alt={
+            image.data.attributes.alternativeText ||
+            "No alternative text provided"
+          }
           width={400}
           height={400}
         />

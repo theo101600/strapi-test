@@ -15,6 +15,7 @@ interface HeaderProps {
 export function Header({ data }: HeaderProps) {
   const pathname = usePathname();
   const headerLight = pathname === "/experience";
+  // console.log(data);
 
   if (!data) return null;
 
@@ -25,8 +26,11 @@ export function Header({ data }: HeaderProps) {
     >
       <Link href="/">
         <StrapiImage
-          src={logo.image.url}
-          alt={logo.image.alternativeText || "No alternative text provided"}
+          src={logo.image.data.attributes.url}
+          alt={
+            logo.image.data.attributes.alternativeText ||
+            "No alternative text provided"
+          }
           className={`header__logo header__logo--${
             headerLight ? "white" : "black"
           }`}
