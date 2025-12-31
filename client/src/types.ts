@@ -5,11 +5,18 @@ export interface LinkProps {
   isExternal: boolean;
 }
 
-export interface ImageProps {
-  id: number;
-  documentId: string;
+export interface StrapiImageAttributes {
   url: string;
-  alternativeText: string;
+  alternativeText: string | null;
+}
+
+export interface StrapiImageData {
+  id: number;
+  attributes: StrapiImageAttributes;
+}
+
+export interface ImageProps {
+  data: StrapiImageData | null;
 }
 
 export interface LogoProps {
@@ -17,18 +24,22 @@ export interface LogoProps {
   image: ImageProps;
 }
 
-export interface ArticleProps {
-  id: number;
-  documentId: string;
+export interface ArticleAttributes {
   title: string;
   description: string;
   slug: string;
   image: ImageProps;
   author: string;
   featured: boolean;
+  blocks: Block[];
   publishedAt: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface ArticleProps {
+  id: number;
+  attributes: ArticleAttributes;
 }
 
 export interface EventProps {
@@ -134,4 +145,16 @@ export interface FullImageProps extends Base<"blocks.full-image"> {
   id: number;
   __component: "blocks.full-image";
   image: ImageProps;
+}
+
+// src/types/subscribe.ts
+export interface SubscribeState {
+  zodErrors?: {
+    email?: string[];
+  };
+  strapiErrors?: {
+    message?: string;
+  };
+  errorMessage?: string;
+  successMessage?: string;
 }

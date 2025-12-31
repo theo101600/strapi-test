@@ -1,15 +1,13 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "*.media.strapiapp.com",
+        hostname: "brilliant-confidence-b9365d20fc.media.strapiapp.com",
       },
     ],
   },
-  reactCompiler: true,
 };
 
-export default nextConfig;
+module.exports = nextConfig;

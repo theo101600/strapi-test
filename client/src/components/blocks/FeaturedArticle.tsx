@@ -9,6 +9,10 @@ export function FeaturedArticle({
   excerpt,
   image,
 }: Readonly<FeaturedArticleProps>) {
+  if (!image?.data) {
+    return null;
+  }
+
   return (
     <article className="featured-article container">
       <div className="featured-article__info">

@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 async function loader() {
   const data = await getHomePage();
   if (!data) notFound();
-  console.log(data);
+  // console.log(data);
   return data.data.attributes;
 }
 

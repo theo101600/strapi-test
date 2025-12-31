@@ -1,14 +1,18 @@
-import { ArticleProps } from "@/types";
+import type { CardProps } from "@/components/Card";
 import { getContent } from "@/data/loaders";
 import { PaginationComponent } from "./PaginationComponent";
 import { Search } from "@/components/Search";
+import type { ArticleProps } from "@/types";
 
 interface ContentListProps {
   headline: string;
   query?: string;
   path: string;
   featured?: boolean;
-  component: React.ComponentType<ArticleProps & { basePath: string }>;
+
+  // ✅ Component receives FLATTENED article props + basePath
+  component: React.ComponentType<CardProps & { basePath: string }>;
+
   headlineAlignment?: "center" | "right" | "left";
   showSearch?: boolean;
   page?: string;
@@ -22,8 +26,9 @@ async function loader(
   page?: string
 ) {
   const { data, meta } = await getContent(path, featured, query, page);
+
   return {
-    articles: (data as ArticleProps[]) || [],
+    articles: data ?? [],
     pageCount: meta?.pagination?.pageCount,
   };
 }
@@ -41,17 +46,25 @@ export async function ContentList({
 }: Readonly<ContentListProps>) {
   const { articles, pageCount } = await loader(path, featured, query, page);
   const Component = component;
+
   return (
     <section className="content-items container">
       <h3 className={`content-items__headline ${headlineAlignment ?? ""}`}>
-        {headline || "Featured Articles"}
+        {headline}
       </h3>
+
       {showSearch && <Search />}
+
       <div className="content-items__container--card">
-        {articles.map((article) => (
-          <Component key={article.id} {...article.attributes} basePath={path} />
+        {articles.map((article: ArticleProps) => (
+          <Component
+            key={article.id}
+            {...article.attributes} // ✅ flattened props
+            basePath={path}
+          />
         ))}
       </div>
+
       {showPagination && <PaginationComponent pageCount={pageCount} />}
     </section>
   );

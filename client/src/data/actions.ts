@@ -8,17 +8,21 @@ const subscribeSchema = z.object({
   }),
 });
 
-export async function subscribeAction(prevState: any, formData: FormData) {
-  console.log("Our first server action");
-  const email = formData.get("email");
+type SubscribeState = {
+  zodErrors?: Record<string, string[]>;
+  strapiErrors?: unknown;
+  errorMessage?: string;
+};
 
+export async function subscribeAction(
+  prevState: SubscribeState,
+  formData: FormData
+) {
   const validatedFields = subscribeSchema.safeParse({
     email: formData.get("email"),
   });
 
   if (!validatedFields.success) {
-    console.dir(validatedFields.error.flatten().fieldErrors, { depth: null });
-
     return {
       ...prevState,
       zodErrors: validatedFields.error.flatten().fieldErrors,
@@ -36,6 +40,7 @@ export async function subscribeAction(prevState: any, formData: FormData) {
       errorMessage: "Something went wrong. Please try again.",
     };
   }
+
   if (responseData.error) {
     return {
       ...prevState,
@@ -44,6 +49,7 @@ export async function subscribeAction(prevState: any, formData: FormData) {
       errorMessage: "Failed to subscribe",
     };
   }
+
   return {
     ...prevState,
     strapiErrors: null,

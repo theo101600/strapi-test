@@ -1,7 +1,6 @@
 import { StrapiImage } from "../StrapiImage";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
-
 import type { InfoBlockProps } from "@/types";
 
 export function InfoBlock({
@@ -12,14 +11,20 @@ export function InfoBlock({
   content,
   cta,
 }: Readonly<InfoBlockProps>) {
+  // ✅ Required image guard
+  if (!image?.data) {
+    return null;
+  }
+
+  const media = image.data.attributes;
+
   return (
-    <section className={`info info--${theme} ${reversed && "info--reversed"}`}>
+    <section
+      className={`info info--${theme} ${reversed ? "info--reversed" : ""}`}
+    >
       <StrapiImage
-        src={image?.data?.attributes?.url}
-        alt={
-          image?.data?.attributes?.alternativeText ||
-          "No alternative text provided"
-        }
+        src={media.url}
+        alt={media.alternativeText || "No alternative text provided"}
         height={500}
         width={600}
         className="info__image"

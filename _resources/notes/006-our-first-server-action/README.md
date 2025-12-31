@@ -2,19 +2,19 @@
 
 Let's create a basic server action:
 
-``` ts
+```ts
 export async function subscribeAction(formData: FormData) {
-  console.log("Our first server action");
+  // console.log("Our first server action");
   const email = formData.get("email");
-  console.log(email, "Our email input from form")
+  // console.log(email, "Our email input from form")
 }
-
 ```
 
 ## Zod Validation
 
 Define your schema:
-``` ts 
+
+```ts
 const subscribeSchema = z.object({
   email: z.string().email({
     message: "Please enter a valid email address",
@@ -22,27 +22,26 @@ const subscribeSchema = z.object({
 });
 ```
 
-
 Validate your schema:
-``` ts
- const validatedFields = subscribeSchema.safeParse({
-    email: formData.get("email"),
-  });
 
-    if (!validatedFields.success) {
+```ts
+const validatedFields = subscribeSchema.safeParse({
+  email: formData.get("email"),
+});
 
-    console.dir(validatedFields.error.flatten().fieldErrors, { depth: null})
+if (!validatedFields.success) {
+  console.dir(validatedFields.error.flatten().fieldErrors, { depth: null });
 
-    return {
-      zodErrors: validatedFields.error.flatten().fieldErrors,
-      strapiErrors: null,
-    };
-  }
+  return {
+    zodErrors: validatedFields.error.flatten().fieldErrors,
+    strapiErrors: null,
+  };
+}
 ```
 
 ## Implementing useFormAction
 
-``` tsx
+```tsx
 "use client";
 import type { SubscribeProps } from "@/types";
 import { useActionState } from "react";
@@ -66,7 +65,7 @@ export function Subscribe({
     INITIAL_STATE
   );
 
-  console.log(formState, "this is our form state coming from useActionState");
+  // console.log(formState, "this is our form state coming from useActionState");
 
   return (
     <section className="newsletter container">
@@ -91,12 +90,11 @@ export function Subscribe({
     </section>
   );
 }
-
 ```
 
 ## Subscribe Service
 
-``` ts
+```ts
 const BASE_URL = process.env.PUBLIC_API_URL ?? "http://localhost:1337";
 
 export async function subscribeService(email: string) {
@@ -130,12 +128,11 @@ export interface EventsSubscribeProps {
     connect: [string];
   };
 }
-
 ```
 
 ## Final Code:
 
-``` tsx
+```tsx
 "use client";
 import type { SubscribeProps } from "@/types";
 import { useActionState } from "react";
@@ -164,7 +161,6 @@ export function Subscribe({
   const errorMessage = strapiErrors || zodErrors || formState?.errorMessage;
   const successMessage = formState?.successMessage;
 
-
   return (
     <section className="newsletter container">
       <div className="newsletter__info">
@@ -176,7 +172,9 @@ export function Subscribe({
           name="email"
           type="text"
           placeholder={errorMessage || successMessage || placeholder}
-          className={`newsletter__email ${errorMessage ? "newsletter__email--error" : ""}`}
+          className={`newsletter__email ${
+            errorMessage ? "newsletter__email--error" : ""
+          }`}
         />
         <button
           type="submit"
@@ -188,12 +186,4 @@ export function Subscribe({
     </section>
   );
 }
-
 ```
-
-
-
-
-
-
-

@@ -12,26 +12,33 @@ export function HeroSection({
   publishedAt,
   darken = false,
 }: Readonly<HeroSectionProps>) {
+  // ✅ Required image guard
+  if (!image?.data) {
+    return null;
+  }
+
+  const background = image.data.attributes;
+  const logoImage = logo?.image?.data?.attributes;
+
   return (
     <section className="hero">
       <div className="hero__background">
         <StrapiImage
-          src={image.data.attributes.url}
-          alt={
-            image.data.attributes.alternativeText ||
-            "No alternative text provided"
-          }
+          src={background.url}
+          alt={background.alternativeText || "No alternative text provided"}
           className="hero__background-image"
           width={1920}
           height={1080}
         />
-        {darken && <div className="hero__background__overlay"></div>}
+        {darken && <div className="hero__background__overlay" />}
       </div>
+
       <div className={`hero__headline hero__headline--${theme}`}>
         <h1>{heading}</h1>
         {author && <p className="hero__author">{author}</p>}
         {publishedAt && <p className="hero__published-at">{publishedAt}</p>}
       </div>
+
       {cta && (
         <button className={`btn btn--medium btn--${theme}`}>
           <Link href={cta.href} target={cta.isExternal ? "_blank" : "_self"}>
@@ -39,10 +46,12 @@ export function HeroSection({
           </Link>
         </button>
       )}
-      {logo && (
+
+      {/* ✅ Optional logo image */}
+      {logoImage && (
         <StrapiImage
-          src={logo.image.url}
-          alt={logo.image.alternativeText || "No alternative text provided"}
+          src={logoImage.url}
+          alt={logoImage.alternativeText || "No alternative text provided"}
           className={`hero__logo hero__logo--${theme}`}
           width={120}
           height={120}

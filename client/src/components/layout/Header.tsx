@@ -1,4 +1,5 @@
 "use client";
+
 import type { LinkProps, LogoProps } from "@/types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,20 +16,20 @@ interface HeaderProps {
 export function Header({ data }: HeaderProps) {
   const pathname = usePathname();
   const headerLight = pathname === "/experience";
-  // console.log(data);
 
   if (!data) return null;
 
   const { logo, navigation, cta } = data;
+
   return (
     <header
       className={`header ${headerLight ? "header--light" : "header--dark"}`}
     >
       <Link href="/">
         <StrapiImage
-          src={logo.image.data.attributes.url}
+          src={logo.image?.data?.attributes?.url}
           alt={
-            logo.image.data.attributes.alternativeText ||
+            logo.image?.data?.attributes?.alternativeText ??
             "No alternative text provided"
           }
           className={`header__logo header__logo--${
@@ -38,6 +39,7 @@ export function Header({ data }: HeaderProps) {
           height={120}
         />
       </Link>
+
       <ul className="header__nav">
         {navigation.map((item) => (
           <li key={item.id}>
@@ -50,6 +52,7 @@ export function Header({ data }: HeaderProps) {
           </li>
         ))}
       </ul>
+
       <Link href={cta.href} target={cta.isExternal ? "_blank" : "_self"}>
         <button className="btn btn--black btn--small">{cta.text}</button>
       </Link>

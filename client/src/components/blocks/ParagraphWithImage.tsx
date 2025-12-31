@@ -8,6 +8,13 @@ export function ParagraphWithImage({
   reversed,
   imageLandscape,
 }: Readonly<ParagraphWithImageProps>) {
+  // ✅ Required image guard
+  if (!image?.data) {
+    return null;
+  }
+
+  const media = image.data.attributes;
+
   return (
     <div
       className={`article-text-image ${
@@ -17,10 +24,11 @@ export function ParagraphWithImage({
       <div className="copy article-text-image__text article-paragraph">
         <ReactMarkdown>{content}</ReactMarkdown>
       </div>
+
       <div className="article-text-image__container">
         <StrapiImage
-          src={image.url}
-          alt={image.alternativeText || "No alternative text provided"}
+          src={media.url}
+          alt={media.alternativeText || "No alternative text provided"}
           width={1920}
           height={1080}
           className="article-text-image__image"

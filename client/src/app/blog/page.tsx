@@ -1,15 +1,14 @@
 import { getPageBySlug } from "@/data/loaders";
 import { notFound } from "next/navigation";
 import { BlockRenderer } from "@/components/blocks/BlockRenderer";
-import { Card, type CardProps } from "@/components/Card";
+
 import { ContentList } from "@/components/ContentList";
-const BlogCard = (props: Readonly<CardProps>) => (
-  <Card {...props} basePath="blog" />
-);
+
+import { BlogCard } from "@/components/Blogcard";
 
 async function loader(slug: string) {
   const { data } = await getPageBySlug(slug);
-  console.log(data);
+  // console.log(data);
   if (data.length === 0) notFound();
   return { blocks: data[0]?.attributes?.blocks };
 }

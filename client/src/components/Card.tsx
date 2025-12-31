@@ -1,17 +1,25 @@
-import { ImageProps } from "@/types";
-
 import Link from "next/link";
-import { StrapiImage } from "./StrapiImage";
+import { StrapiImage } from "@/components/StrapiImage";
 import { formatDate } from "@/utils/format-date";
 
+interface ImageAttributes {
+  url: string | null;
+  alternativeText: string | null;
+}
+
+interface ImageData {
+  attributes: ImageAttributes;
+}
+
+interface ImageProps {
+  data: ImageData | null;
+}
+
 export interface CardProps {
-  documentId: string;
   title: string;
   description: string;
   slug: string;
-  image: ImageProps;
-  price?: number;
-  startDate?: string;
+  image: ImageProps | null;
   createdAt: string;
   basePath: string;
 }
@@ -21,36 +29,32 @@ export function Card({
   description,
   slug,
   image,
-  price,
   createdAt,
-  startDate,
   basePath,
 }: Readonly<CardProps>) {
   return (
     <Link href={`/${basePath}/${slug}`} className="content-items__card">
       <div className="content-items__card-img">
         <StrapiImage
-          src={image.data.attributes.url}
+          src={image?.data?.attributes?.url}
           alt={
-            image.data.attributes.alternativeText ||
+            image?.data?.attributes?.alternativeText ??
             "No alternative text provided"
           }
           width={400}
           height={400}
+          sizes="(max-width: 768px) 100vw, 400px"
         />
       </div>
+
       <div className="content-items__card-text">
         <h5>{title}</h5>
-        {price && (
-          <p>
-            <span>Price: </span>
-            {price}
-          </p>
-        )}
-        {(startDate ?? createdAt) && (
-          <p>{formatDate(startDate ?? createdAt)}</p>
-        )}
-        <p>{description.slice(0, 144)}...</p>
+        <p>{formatDate(createdAt)}</p>
+        <p>
+          {description.length > 144
+            ? `${description.slice(0, 144)}...`
+            : description}
+        </p>
       </div>
     </Link>
   );
